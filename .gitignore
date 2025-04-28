@@ -1,0 +1,17 @@
+# IDE
+.idea/
+.vscode/
+.vs/
+*.suo
+*.user
+
+# Build
+[Bb]in/
+[Oo]bj/
+
+# System
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
