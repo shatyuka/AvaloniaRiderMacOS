@@ -1,7 +1,11 @@
 ﻿using Avalonia;
 using System;
+
+#if DEBUG
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+#endif
 
 namespace AvaloniaRiderMacOS;
 
@@ -16,8 +20,11 @@ class Program
 #if DEBUG
         if (Environment.GetEnvironmentVariable("AVALONIA_DESIGNER_PREVIEW") != null)
         {
+            var avalonia = Assembly.GetAssembly(typeof(AvaloniaObject))!;
+            var v = FileVersionInfo.GetVersionInfo(avalonia.Location);
+            var version = $"{v.FileMajorPart}.{v.FileMinorPart}.{v.FileBuildPart}";
             var previewBinary = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                ".nuget/packages/avalonia/11.2.8/tools/netstandard2.0/designer/Avalonia.Designer.HostApp.dll");
+                $".nuget/packages/avalonia/{version}/tools/netstandard2.0/designer/Avalonia.Designer.HostApp.dll");
             var assembly = Assembly.LoadFrom(previewBinary);
             var module = assembly.GetModule("Avalonia.Designer.HostApp.dll");
             var program = module?.GetType("Avalonia.Designer.HostApp.Program");
